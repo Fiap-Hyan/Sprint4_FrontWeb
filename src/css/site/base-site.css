@@ -1,0 +1,79 @@
+/* ---------------------------------------------------------------------------
+   Reinicialização e tipografia da landing page.
+
+   Todas as regras são presas a `[data-pagina='site']` (atributo escrito no
+   <html> pelo App): assim elas valem apenas na landing e não vazam para o
+   protótipo do aplicativo, que tem a própria base em `css/base.css`.
+   O `:where()` mantém a especificidade original de cada seletor, para que as
+   classes do arquivo `estilo.css` continuem vencendo as regras de elemento.
+   ------------------------------------------------------------------------- */
+
+[data-pagina='site'] {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+  -webkit-text-size-adjust: 100%;
+}
+
+:where([data-pagina='site']) body {
+  margin: 0;
+  font-family: 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:where([data-pagina='site']) img,
+:where([data-pagina='site']) svg,
+:where([data-pagina='site']) video {
+  max-width: 100%;
+  display: block;
+}
+
+:where([data-pagina='site']) a {
+  color: inherit;
+}
+
+:where([data-pagina='site']) ul,
+:where([data-pagina='site']) ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+:where([data-pagina='site']) button {
+  font: inherit;
+  cursor: pointer;
+  color: inherit;
+}
+
+:where([data-pagina='site']) input,
+:where([data-pagina='site']) textarea {
+  font: inherit;
+}
+
+:where([data-pagina='site']) figure,
+:where([data-pagina='site']) p,
+:where([data-pagina='site']) h1,
+:where([data-pagina='site']) h2,
+:where([data-pagina='site']) h3 {
+  margin: 0;
+}
+
+:where([data-pagina='site']) h1,
+:where([data-pagina='site']) h2,
+:where([data-pagina='site']) h3 {
+  line-height: 1.12;
+  font-family: 'Sora', 'Segoe UI', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+:where([data-pagina='site']) ::selection {
+  background: #ff2e7e;
+  color: #fff;
+}
+
+:where([data-pagina='site']) :focus-visible {
+  outline: 2px solid #5b83ff;
+  outline-offset: 3px;
+  border-radius: 6px;
+}

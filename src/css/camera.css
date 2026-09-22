@@ -1,0 +1,535 @@
+/* ---------------------------------------------------------------------------
+   Tela da câmera: barra superior, visor, trilho de modos e barra de captura.
+   ------------------------------------------------------------------------- */
+
+.tela--camera {
+  background: var(--preto);
+}
+
+/* --------------------------------------------------------- barra superior */
+
+.barra-camera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 14px;
+  height: 52px;
+  flex-shrink: 0;
+}
+
+.barra-camera__grupo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.barra-camera__proporcao {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 6px 8px;
+}
+
+.barra-camera__selo {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  background: var(--roxo);
+  color: #fff;
+  border-radius: 999px;
+  padding: 0 4px;
+  line-height: 1.3;
+}
+
+.pilula-ia {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 15px;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: var(--superficie-3);
+  color: var(--texto-fraco);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.pilula-ia.is-ativa {
+  background: linear-gradient(135deg, #8b5cf6 0%, #6d33ec 100%);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(109, 51, 236, 0.45);
+}
+
+/* ----------------------------------------------------------------- visor */
+
+.visor {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: #050505;
+}
+
+.visor__cena {
+  position: absolute;
+  inset: 0;
+  transform-origin: center;
+  transition: transform 0.35s ease;
+}
+
+.visor__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.visor__simulacao {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(130% 90% at 50% 0%, #55584f 0%, #2a2c26 42%, #101110 100%);
+}
+
+.visor__brilho,
+.visor__superficie,
+.visor__mao {
+  position: absolute;
+}
+
+.visor__brilho {
+  inset: 0;
+  background: radial-gradient(55% 38% at 32% 10%, rgba(255, 255, 255, 0.18), transparent 70%);
+}
+
+.visor__superficie {
+  inset: 0;
+  opacity: 0.45;
+  background-image: repeating-linear-gradient(
+    118deg,
+    rgba(255, 255, 255, 0.05) 0 2px,
+    rgba(0, 0, 0, 0.04) 2px 7px
+  );
+}
+
+.visor__mao {
+  left: -12%;
+  right: -12%;
+  bottom: -10%;
+  height: 24%;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  background: linear-gradient(180deg, #caa07a 0%, #8b6045 100%);
+  filter: blur(7px);
+}
+
+.visor__estado {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 0.78rem;
+}
+
+.visor__moldura {
+  position: absolute;
+  inset: 14% 10%;
+  pointer-events: none;
+  animation: pulsar-moldura 2.4s ease-in-out infinite;
+}
+
+.visor__canto {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border: 3px solid #6ee7a8;
+}
+
+.visor__canto--se {
+  top: 0;
+  left: 0;
+  border-right: 0;
+  border-bottom: 0;
+  border-radius: 6px 0 0 0;
+}
+
+.visor__canto--sd {
+  top: 0;
+  right: 0;
+  border-left: 0;
+  border-bottom: 0;
+  border-radius: 0 6px 0 0;
+}
+
+.visor__canto--ie {
+  bottom: 0;
+  left: 0;
+  border-right: 0;
+  border-top: 0;
+  border-radius: 0 0 0 6px;
+}
+
+.visor__canto--id {
+  bottom: 0;
+  right: 0;
+  border-left: 0;
+  border-top: 0;
+  border-radius: 0 0 6px 0;
+}
+
+.visor__rotulo-moldura {
+  position: absolute;
+  top: -34px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.85);
+  color: #04231a;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+@keyframes pulsar-moldura {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.visor__contagem {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 5rem;
+  font-weight: 300;
+  color: #fff;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+}
+
+.visor__clarao {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  animation: clarao 0.22s ease-out;
+}
+
+@keyframes clarao {
+  from {
+    opacity: 0.9;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.visor__rodape {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+}
+
+.visor__documento {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(8px);
+  transition: background 0.2s ease;
+}
+
+.visor__documento.is-ativo {
+  background: rgba(110, 231, 168, 0.4);
+  box-shadow: 0 0 0 2px rgba(110, 231, 168, 0.8);
+}
+
+/* ------------------------------------------------------------ seletor de zoom */
+
+.seletor-zoom {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(88, 79, 70, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.seletor-zoom__item {
+  min-width: 40px;
+  height: 30px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  transition: background 0.18s ease;
+}
+
+.seletor-zoom__item.is-ativo {
+  background: rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ----------------------------------------------------------- controles baixo */
+
+.camera__controles {
+  position: relative;
+  flex-shrink: 0;
+  background: var(--preto);
+  padding-top: 6px;
+}
+
+.seletor-modos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 14px 12px 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.seletor-modos::-webkit-scrollbar {
+  display: none;
+}
+
+.seletor-modos__item {
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: #86868b;
+  white-space: nowrap;
+  padding: 4px 2px;
+  transition: color 0.18s ease;
+}
+
+.seletor-modos__item.is-ativo {
+  color: #fff;
+  font-weight: 700;
+}
+
+.barra-captura {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 8px 22px 18px;
+}
+
+.barra-captura__lateral {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.botao-atalho {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #212124;
+  color: #fff;
+  transition:
+    transform 0.15s ease,
+    background 0.2s ease;
+}
+
+.botao-atalho:active {
+  transform: scale(0.94);
+}
+
+.botao-atalho.is-ativo {
+  background: #33333a;
+}
+
+.botao-atalho--flutuante {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  animation: subir-atalho 0.22s ease-out;
+}
+
+@keyframes subir-atalho {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.obturador {
+  width: 78px;
+  height: 78px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 4px solid var(--roxo);
+  background: transparent;
+}
+
+.obturador__miolo {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.12s ease;
+}
+
+.obturador:active .obturador__miolo {
+  transform: scale(0.88);
+}
+
+.obturador.is-ocupado .obturador__miolo {
+  background: #d9d9de;
+}
+
+/* -------------------------------------------------------- painel de captura */
+
+.painel-captura {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: calc(100% + 10px);
+  padding: 16px;
+  border-radius: var(--raio-cartao);
+  background: rgba(24, 24, 27, 0.96);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+  animation: subir-painel 0.24s ease-out;
+}
+
+@keyframes subir-painel {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.painel-captura__fechar {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  color: var(--texto-fraco);
+}
+
+.painel-captura__topo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.painel-captura__miniatura {
+  width: 58px;
+  height: 72px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #000;
+}
+
+.painel-captura__titulo {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.painel-captura__legenda {
+  margin-top: 4px;
+  font-size: 0.78rem;
+  color: var(--texto-fraco);
+}
+
+.painel-captura__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 16px;
+}
+
+.chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--texto-medio);
+  background: var(--superficie-3);
+  border: 1px solid transparent;
+}
+
+.chip.is-ativo {
+  color: #fff;
+  border-color: var(--cor-chip, var(--roxo));
+  background: color-mix(in srgb, var(--cor-chip, var(--roxo)) 28%, #1c1c1e);
+}
+
+.painel-captura__acoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.visor__video {
+  position: absolute;
+  inset: 0;
+}
+
+.visor__video.is-oculto {
+  opacity: 0;
+}
+
+.barra-captura__lateral:first-child {
+  justify-content: flex-start;
+}
+
+.barra-captura__lateral:last-child {
+  justify-content: flex-end;
+}
+
+/* Camada invisível que fecha o atalho dos álbuns ao tocar em qualquer outro
+   ponto da tela da câmera. */
+.camada-atalho {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: rgba(0, 0, 0, 0.28);
+  cursor: default;
+  animation: aparecer 0.15s ease-out;
+}
+
+.camera__controles {
+  z-index: 6;
+}
+
+.botao-atalho {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}

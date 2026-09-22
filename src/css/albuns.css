@@ -1,0 +1,167 @@
+/* ---------------------------------------------------------------------------
+   Tela de Álbuns: cartão de resumo e grade de matérias.
+   ------------------------------------------------------------------------- */
+
+.cartao-resumo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 12px;
+  padding: 20px;
+  border-radius: var(--raio-cartao);
+  background: var(--superficie);
+}
+
+.cartao-resumo__rotulo {
+  font-size: 0.95rem;
+  color: #c9c9ce;
+}
+
+.cartao-resumo__valor {
+  margin: 4px 0 12px;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.cartao-resumo__data {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84rem;
+  color: var(--texto-fraco);
+}
+
+.cartao-resumo__selo {
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: var(--superficie-3);
+  flex-shrink: 0;
+}
+
+/* -------------------------------------------------------- grade de matérias */
+
+.grade-albuns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.cartao-album {
+  position: relative;
+  min-height: 158px;
+  border-radius: 20px;
+  background: var(--superficie);
+  overflow: hidden;
+}
+
+.cartao-album__area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  width: 100%;
+  height: 100%;
+  min-height: 158px;
+  padding: 34px 14px 16px;
+  text-align: left;
+  color: inherit;
+}
+
+.cartao-album__icone {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  margin-bottom: auto;
+}
+
+.cartao-album__icone--novo {
+  background: var(--superficie-3);
+  color: var(--texto-medio);
+}
+
+.cartao-album__nome {
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.cartao-album__contagem {
+  font-size: 0.8rem;
+  color: var(--texto-fraco);
+}
+
+.cartao-album__menu {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--superficie-3);
+  color: #e4e4e8;
+}
+
+.cartao-album__ordenar {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 4px;
+}
+
+.cartao-album__ordenar button {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--superficie-3);
+  color: #e4e4e8;
+}
+
+.cartao-album--novo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 34px 14px 16px;
+  background: transparent;
+  border: 1px dashed #33333a;
+  text-align: left;
+}
+
+/* ---------------------------------------------------------- seletor de cores */
+
+.seletor-cores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.seletor-cores__opcao {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  transition: box-shadow 0.15s ease;
+}
+
+.seletor-cores__opcao.is-ativa {
+  box-shadow:
+    0 0 0 2px #131316,
+    0 0 0 4px #fff;
+}

@@ -1,0 +1,676 @@
+/* ---------------------------------------------------------------------------
+   Anotações: grade do álbum, listas e tela de leitura.
+   ------------------------------------------------------------------------- */
+
+.grade-notas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.cartao-nota {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0c0c0e;
+  aspect-ratio: 1 / 1.12;
+}
+
+.cartao-nota__area {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: inherit;
+}
+
+.miniatura__imagem,
+.miniatura__desenho {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cartao-nota__legenda {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 22px 10px 8px;
+  font-size: 0.74rem;
+  text-align: left;
+  color: #fff;
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.82));
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cartao-nota:hover .cartao-nota__legenda,
+.cartao-nota__area:focus-visible .cartao-nota__legenda {
+  opacity: 1;
+}
+
+.cartao-nota__menu {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(58, 58, 60, 0.85);
+  backdrop-filter: blur(6px);
+  color: #fff;
+}
+
+/* --------------------------------------------------------- listas de notas */
+
+.lista-notas {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.item-nota {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: var(--raio-medio);
+  background: var(--superficie);
+}
+
+.item-nota__area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  color: inherit;
+  padding: 4px;
+}
+
+.item-nota__miniatura {
+  width: 44px;
+  height: 52px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #000;
+}
+
+.item-nota__texto {
+  min-width: 0;
+}
+
+.item-nota__titulo {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-nota__legenda {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 3px;
+  font-size: 0.76rem;
+  color: var(--texto-fraco);
+}
+
+.item-nota__ponto {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.item-nota__acoes {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* ------------------------------------------------- tela da nota (análise IA) */
+
+.cabecalho-analise {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 10px 6px;
+  flex-shrink: 0;
+}
+
+.cabecalho-analise__acoes {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.tela__rolagem--analise {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 4px 16px 32px;
+}
+
+/*
+ * A coluna rola: sem isto o flex encolhe os cartões (e principalmente a foto,
+ * que tem altura automática) assim que a análise enche a tela de conteúdo.
+ */
+.tela__rolagem--analise > * {
+  flex-shrink: 0;
+}
+
+/* ------------------------------------------------------- foto da captura */
+
+.foto-analise {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #0c0c0e;
+  line-height: 0;
+}
+
+.foto-analise .miniatura__imagem,
+.foto-analise .miniatura__desenho {
+  transform: rotate(var(--giro, 0deg));
+  transition: transform 0.3s ease;
+}
+
+/* A foto aparece inteira: a altura acompanha a imagem até o limite da tela. */
+.foto-analise .miniatura__imagem {
+  width: 100%;
+  height: auto;
+  max-height: 460px;
+  object-fit: contain;
+}
+
+.foto-analise .miniatura__desenho {
+  height: 420px;
+}
+
+/* Girada em 90 ou 270 graus, a moldura vira um quadrado para que a imagem
+   continue inteira dentro dela. */
+.foto-analise.is-lado {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+}
+
+.foto-analise.is-lado .miniatura__imagem,
+.foto-analise.is-lado .miniatura__desenho {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.foto-analise__selo {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(18, 18, 20, 0.78);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+.foto-analise__selo svg {
+  color: var(--roxo-claro);
+}
+
+.foto-analise__girar {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(18, 18, 20, 0.78);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  transition: background 0.18s ease;
+}
+
+.foto-analise__girar:hover {
+  background: rgba(56, 56, 60, 0.9);
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/* ------------------------------------------------------ cartões da análise */
+
+.cartao-analise {
+  padding: 20px 18px;
+  border-radius: 18px;
+  background: var(--superficie-2);
+}
+
+.cartao-analise__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 22px;
+}
+
+.cartao-analise__rotulo {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--roxo-claro);
+}
+
+.cartao-analise__acao {
+  width: 34px;
+  height: 34px;
+  margin: -6px -6px -6px 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--roxo-claro);
+  transition: background 0.18s ease;
+}
+
+.cartao-analise__acao:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.cartao-analise__acao.is-lendo {
+  color: #e5e5ea;
+}
+
+.cartao-analise__acao.is-processando {
+  animation: girar 1.1s linear infinite;
+  cursor: default;
+}
+
+/* Convite para gerar o quiz, no lugar em que ele aparece depois de pronto. */
+.botao-quiz {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 18px 20px;
+  border-radius: 14px;
+  border: 1px solid rgba(124, 77, 255, 0.6);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: left;
+  transition: background 0.18s ease;
+}
+
+.botao-quiz svg {
+  flex-shrink: 0;
+  color: var(--roxo-claro);
+}
+
+.botao-quiz:hover:not(:disabled) {
+  background: rgba(124, 77, 255, 0.12);
+}
+
+.botao-quiz:disabled {
+  opacity: 0.65;
+  cursor: default;
+}
+
+/* "Falar com o tutor": leva o resumo aberto para o chat da aba Tutor. */
+.botao-tutor {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  margin-bottom: 14px;
+  padding: 16px 20px;
+  border-radius: var(--raio-cartao);
+  background: linear-gradient(135deg, var(--roxo) 0%, #8b5cf6 100%);
+  color: #fff;
+  text-align: left;
+  transition: filter 0.18s ease;
+}
+
+.botao-tutor:hover {
+  filter: brightness(1.08);
+}
+
+.botao-tutor svg {
+  flex-shrink: 0;
+}
+
+.botao-tutor strong {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.botao-tutor span {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.cartao-analise__aviso {
+  margin-top: 14px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--texto-medio);
+}
+
+.botao-analisar,
+.botao-entregar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 999px;
+  background: var(--roxo);
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: background 0.18s ease;
+}
+
+.botao-analisar:hover:not(:disabled),
+.botao-entregar:hover:not(:disabled) {
+  background: var(--roxo-escuro);
+}
+
+.botao-analisar:disabled,
+.botao-entregar:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.botao-entregar {
+  margin-top: 24px;
+  padding: 16px;
+  font-size: 0.95rem;
+}
+
+/* ------------------------------------------------------ assunto e resumo */
+
+.analise-titulo {
+  margin-top: 14px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.analise-legenda {
+  margin-top: 8px;
+  font-size: 0.84rem;
+  color: var(--texto-fraco);
+}
+
+.analise-resumo {
+  margin-top: 14px;
+  font-size: 0.94rem;
+  line-height: 1.75;
+  color: #e6e6ea;
+}
+
+.lista-palavras {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.palavra-chave {
+  padding: 11px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(124, 77, 255, 0.6);
+  color: #f0ecff;
+  font-size: 0.87rem;
+  line-height: 1;
+}
+
+/* ------------------------------------------------------------------- quiz */
+
+.quiz {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  margin-top: 18px;
+}
+
+.quiz__pergunta {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.quiz__opcoes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.quiz__opcao {
+  display: block;
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: var(--superficie-3);
+  color: #e8e8ec;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-align: left;
+  transition: background 0.18s ease, border-color 0.18s ease;
+}
+
+.quiz__opcao:hover:not(:disabled) {
+  background: var(--superficie-4);
+}
+
+.quiz__opcao:disabled {
+  cursor: default;
+}
+
+.quiz__opcao.is-escolhida {
+  border-color: rgba(124, 77, 255, 0.85);
+  background: rgba(124, 77, 255, 0.16);
+  color: #fff;
+}
+
+.quiz__opcao.is-certa {
+  border-color: #30d158;
+  background: rgba(48, 209, 88, 0.14);
+  color: #fff;
+}
+
+.quiz__opcao.is-errada {
+  border-color: var(--vermelho);
+  background: rgba(255, 95, 86, 0.14);
+  color: #fff;
+}
+
+.quiz__resultado {
+  margin-top: 22px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.55;
+  color: var(--texto-medio);
+}
+
+.quiz__resultado.is-perfeito {
+  color: #4ade80;
+}
+
+.quiz__resultado.is-quase {
+  color: #ff9f45;
+}
+
+.quiz__resultado.is-fraco {
+  color: #ff6b63;
+}
+
+.botao-refazer {
+  display: block;
+  width: 100%;
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  color: #fff;
+  font-size: 0.95rem;
+  transition: background 0.18s ease;
+}
+
+.botao-refazer:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ---------------------------------------- pontos-chave e conteúdos ligados */
+
+.lista-pontos {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.ponto-chave {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #d8d8de;
+}
+
+.ponto-chave__numero {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--superficie-3);
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.lista-atalhos {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.atalho-relacionado {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--texto-fraco);
+  text-align: left;
+  transition: background 0.18s ease;
+}
+
+.atalho-relacionado:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.atalho-relacionado__icone {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--superficie-3);
+  color: #e8e8ec;
+}
+
+.atalho-relacionado__icone--youtube {
+  background: #ff0000;
+  color: #fff;
+}
+
+.atalho-relacionado__texto {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.atalho-relacionado__titulo {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.atalho-relacionado__descricao {
+  font-size: 0.8rem;
+  color: var(--texto-fraco);
+}
+
+.cartao-analise .nota-erro {
+  margin-top: 14px;
+}
+
+.nota-erro {
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 95, 86, 0.35);
+  background: rgba(255, 95, 86, 0.12);
+  color: #ffb3ae;
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+/* ------------------------------------------------------------------ galeria */
+
+.galeria-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.galeria-topo .contador-resultados {
+  margin: 16px 4px 8px 0;
+}
+
+.secao-titulo__contagem {
+  font-size: 0.78rem;
+  color: var(--texto-fraco);
+}

@@ -1,0 +1,8 @@
+INTEGRANTES DO GRUPO - STUDYCAM AI
+JOVI Eng. Software Challenge 2026 - FIAP
+Sprint 4 - Front-End Design + Web Development
+
+Ian Felipe Tassiotto Gomes - RM570812 - Tech Lead
+Joao Gabriel Vieira Mesquita - RM573685 - Engenheiro de Software & Storyteller
+Hyan Hideo Silveira Teodoro Ayabe - RM571005 - Cientista & Front-End
+Elizeu Antonio de Queiroz - RM569433 - Designer

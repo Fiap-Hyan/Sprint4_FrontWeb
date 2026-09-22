@@ -1,0 +1,127 @@
+/* ---------------------------------------------------------------------------
+   Aparelho: moldura do celular, barra de status e barra de navegação do
+   sistema. No celular a aplicação ocupa a tela inteira; do tablet para cima
+   ela ganha a moldura do aparelho.
+   ------------------------------------------------------------------------- */
+
+/*
+ * Largura fixa e definida em unidades absolutas: como o aparelho é um item de
+ * grid centralizado, `width: 100%` seria resolvido pelo conteúdo e o celular
+ * mudaria de largura a cada tela. Aqui a moldura nunca muda — só o que está
+ * dentro dela.
+ */
+.dispositivo {
+  width: min(100vw, var(--largura-app));
+  height: 100dvh;
+  flex-shrink: 0;
+}
+
+.dispositivo__tela {
+  position: relative;
+  display: grid;
+  /* Barra de status, corpo, abas da biblioteca (quando existem) e barra do
+     sistema. A linha das abas fica com altura zero nas telas que não as têm. */
+  grid-template-rows: auto 1fr auto auto;
+  height: 100%;
+  background: var(--preto);
+  overflow: hidden;
+}
+
+.dispositivo__corpo {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (min-width: 700px) {
+  .dispositivo {
+    height: min(calc(100dvh - 48px), var(--altura-app));
+    padding: 8px;
+    border-radius: 46px;
+    background: linear-gradient(160deg, #26262c 0%, #101014 60%, #26262c 100%);
+    box-shadow:
+      0 40px 90px rgba(0, 0, 0, 0.65),
+      0 0 0 1px rgba(255, 255, 255, 0.06);
+  }
+
+  .dispositivo__tela {
+    border-radius: 38px;
+  }
+}
+
+/* ----------------------------------------------------------- barra de status */
+
+.barra-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 34px;
+  padding: 0 16px 0 20px;
+  color: var(--texto);
+  background: var(--preto);
+  flex-shrink: 0;
+}
+
+.barra-status__esquerda,
+.barra-status__direita {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.barra-status__hora {
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  margin-right: 3px;
+}
+
+.barra-status__ponto {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.barra-status__wifi {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.barra-status__wifi sup {
+  font-size: 0.55rem;
+  font-weight: 700;
+  margin-left: -2px;
+  margin-top: -6px;
+}
+
+/* ------------------------------------------------------- barra do sistema */
+
+.barra-sistema {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  height: 46px;
+  background: var(--preto);
+  color: #cfcfd3;
+  flex-shrink: 0;
+}
+
+.barra-sistema button {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: inherit;
+  transition: opacity 0.15s ease;
+}
+
+.barra-sistema button:hover {
+  opacity: 0.65;
+}
+
+@media (min-width: 1080px) {
+  .dispositivo {
+    height: min(calc(100dvh - 96px), var(--altura-app));
+  }
+}

@@ -1,0 +1,65 @@
+/* ---------------------------------------------------------------------------
+   Entrada única de estilos do projeto.
+
+   O Tailwind CSS é a ferramenta de estilização das telas (classes utilitárias
+   nos componentes). O bloco @theme mais abaixo registra os tokens da marca
+   StudyCam AI no Tailwind, de modo que as cores viram utilitários prontos:
+   --color-roxo  =>  bg-roxo, text-roxo, border-roxo...
+
+   Os arquivos de css/ cobrem o que não é utilitário (a moldura do aparelho, as
+   animações e o restante da landing page) e vão sendo reduzidos conforme as
+   telas migram para as classes do Tailwind.
+
+   Todos os @import ficam no topo porque o CSS exige que eles venham antes de
+   qualquer outra regra.
+   ------------------------------------------------------------------------- */
+@import 'tailwindcss';
+
+/* Estilos do protótipo do aplicativo (rota /app) */
+@import './css/base.css';
+@import './css/dispositivo.css';
+@import './css/camera.css';
+@import './css/albuns.css';
+@import './css/notas.css';
+@import './css/paineis.css';
+@import './css/ui.css';
+
+/* Estilos da landing page (rota inicial) */
+@import './css/site/base-site.css';
+@import './css/site/estilo.css';
+
+@theme {
+  /* Superfícies do aplicativo (fundo preto do celular e cartões arroxeados).
+     Os mesmos valores estão em css/base.css, como variáveis do CSS puro, para
+     que as telas em Tailwind e as em CSS fiquem exatamente iguais. */
+  --color-preto: #000000;
+  --color-superficie: #16122a;
+  --color-superficie-2: #1f1a38;
+  --color-superficie-3: #2a2447;
+  --color-superficie-4: #38315c;
+
+  /* Cartões arredondados das telas de resumo, tutor e simulados */
+  --color-cartao: #17132b;
+  --color-cartao-2: #211b3d;
+
+  /* Texto */
+  --color-texto: #ffffff;
+  --color-texto-medio: #b8b8bd;
+  --color-texto-fraco: #8e8e93;
+
+  /* Acento da marca */
+  --color-roxo: #7c4dff;
+  --color-roxo-claro: #b39bff;
+  --color-roxo-escuro: #5b2ee0;
+
+  /* Estados */
+  --color-vermelho: #ff5f56;
+  --color-ambar: #ffcd4d;
+  --color-verde: #34d399;
+
+  /* Tipografia e medidas do aparelho */
+  --font-sans: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Noto Sans', system-ui,
+    sans-serif;
+  --radius-cartao: 22px;
+  --radius-medio: 16px;
+}

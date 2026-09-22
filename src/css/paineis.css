@@ -1,0 +1,287 @@
+/* ---------------------------------------------------------------------------
+   Central de conteúdo, histórico, lixeira e ajustes.
+   ------------------------------------------------------------------------- */
+
+/* As colunas se distribuem pela quantidade de números da tela (duas na central
+   de conteúdo, três no histórico). */
+.faixa-numeros {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.faixa-numeros div {
+  padding: 16px 10px;
+  border-radius: var(--raio-medio);
+  background: var(--superficie);
+  text-align: center;
+}
+
+.faixa-numeros strong {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.faixa-numeros span {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.72rem;
+  color: var(--texto-fraco);
+  line-height: 1.3;
+}
+
+/* ------------------------------------------------------------------ atalhos */
+
+.lista-atalhos {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.atalho {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--raio-medio);
+  background: var(--superficie);
+  color: inherit;
+  text-align: left;
+  transition: background 0.18s ease;
+}
+
+.atalho:hover {
+  background: var(--superficie-2);
+}
+
+.atalho__icone {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--superficie-3);
+  flex-shrink: 0;
+}
+
+.atalho__texto {
+  flex: 1;
+  min-width: 0;
+}
+
+.atalho__rotulo {
+  display: block;
+  font-size: 0.93rem;
+  font-weight: 600;
+}
+
+.atalho__descricao {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.76rem;
+  color: var(--texto-fraco);
+}
+
+/* ------------------------------------------------------- barras e eventos */
+
+.lista-barras {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.lista-barras__topo {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.84rem;
+  margin-bottom: 6px;
+}
+
+.lista-barras__topo span:last-child {
+  color: var(--texto-fraco);
+}
+
+.lista-barras__trilho {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--superficie-2);
+  overflow: hidden;
+}
+
+.lista-barras__valor {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.lista-eventos {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.lista-eventos__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 6px;
+  border-bottom: 1px solid #1c1c1f;
+}
+
+.lista-eventos__marca {
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: var(--texto-fraco);
+  flex-shrink: 0;
+}
+
+.lista-eventos__item.is-criou .lista-eventos__marca {
+  background: #4ade80;
+}
+
+.lista-eventos__item.is-removeu .lista-eventos__marca {
+  background: var(--vermelho);
+}
+
+.lista-eventos__item.is-editou .lista-eventos__marca {
+  background: var(--ambar);
+}
+
+.lista-eventos__item.is-album .lista-eventos__marca {
+  background: var(--roxo);
+}
+
+.lista-eventos__titulo {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.lista-eventos__detalhe {
+  margin-top: 3px;
+  font-size: 0.76rem;
+  color: var(--texto-fraco);
+}
+
+/* ------------------------------------------------------------------ ajustes */
+
+.grupo-ajuste {
+  padding: 14px 4px 6px;
+}
+
+.grupo-ajuste__rotulo {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.segmentado {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 999px;
+  background: var(--superficie);
+}
+
+.segmentado button {
+  flex: 1;
+  padding: 9px 6px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--texto-fraco);
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.segmentado button.is-ativo {
+  background: var(--roxo);
+  color: #fff;
+}
+
+.interruptor {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 4px;
+  /* Translúcido para funcionar sobre qualquer cartão, claro ou escuro. */
+  border-bottom: 1px solid rgb(255 255 255 / 0.07);
+  cursor: pointer;
+}
+
+.interruptor:last-child {
+  border-bottom: none;
+}
+
+.interruptor.is-desabilitado {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.interruptor input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.interruptor__texto {
+  flex: 1;
+  min-width: 0;
+}
+
+.interruptor__rotulo {
+  display: block;
+  font-size: 0.93rem;
+  font-weight: 600;
+}
+
+.interruptor__descricao {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: var(--texto-fraco);
+}
+
+.interruptor__trilho {
+  position: relative;
+  width: 50px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--superficie-4);
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.interruptor__bolinha {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s ease;
+}
+
+.interruptor input:checked + .interruptor__trilho {
+  background: var(--roxo);
+}
+
+.interruptor input:checked + .interruptor__trilho .interruptor__bolinha {
+  transform: translateX(22px);
+}
+
+.interruptor input:focus-visible + .interruptor__trilho {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}

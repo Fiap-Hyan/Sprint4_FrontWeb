@@ -1,0 +1,324 @@
+/* ---------------------------------------------------------------------------
+   Base: reinicialização, variáveis de tema e o "palco" que centraliza o
+   aparelho na tela do computador.
+   ------------------------------------------------------------------------- */
+
+:root[data-pagina='app'] {
+  --preto: #000000;
+  /* Superfícies arroxeadas: é o tom dos cartões nas telas do aplicativo. */
+  --superficie: #16122a;
+  --superficie-2: #1f1a38;
+  --superficie-3: #2a2447;
+  --superficie-4: #38315c;
+  --texto: #ffffff;
+  --texto-fraco: #8e8e93;
+  --texto-medio: #b8b8bd;
+  --roxo: #7c4dff;
+  --roxo-claro: #b39bff;
+  --roxo-escuro: #5b2ee0;
+  --vermelho: #ff5f56;
+  --ambar: #ffcd4d;
+  --raio-cartao: 22px;
+  --raio-medio: 16px;
+  --largura-app: 412px;
+  --altura-app: 892px;
+  --fonte: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Noto Sans', system-ui,
+    sans-serif;
+}
+
+/* A tela de entrada (/entrar) e escura como o aplicativo, mas continua
+   rolando: ela usa so utilitarios do Tailwind, entao aqui basta o fundo. */
+:where([data-pagina='entrar']) body {
+  background: #05050a;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:where([data-pagina='app']),
+:where([data-pagina='app']) body,
+:where([data-pagina='app']) #root {
+  height: 100%;
+  /* A página nunca rola: só as áreas internas do aparelho rolam. Assim a barra
+     de rolagem do navegador não aparece e some, o que deslocaria o aparelho. */
+  overflow: hidden;
+}
+
+:where([data-pagina='app']) body {
+  margin: 0;
+  background: #05050a;
+  color: var(--texto);
+  font-family: var(--fonte);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+:where([data-pagina='app']) button,
+:where([data-pagina='app']) input {
+  font-family: inherit;
+  color: inherit;
+}
+
+:where([data-pagina='app']) button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+:where([data-pagina='app']) h1,
+:where([data-pagina='app']) h2,
+:where([data-pagina='app']) p,
+:where([data-pagina='app']) dl,
+:where([data-pagina='app']) dd {
+  margin: 0;
+}
+
+:where([data-pagina='app']) ul,
+:where([data-pagina='app']) ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ------------------------------------------------------------------ palco */
+
+.palco {
+  height: 100dvh;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  align-content: center;
+  background: radial-gradient(circle at 20% 15%, #1b1140 0%, #05050a 55%, #04040a 100%);
+}
+
+.palco__contexto {
+  display: none;
+  max-width: 460px;
+  max-height: 100%;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.palco__marca {
+  font-size: 0.8rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--roxo);
+  font-weight: 700;
+}
+
+.palco__titulo {
+  margin: 12px 0 18px;
+  font-size: 2.4rem;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.palco__texto,
+.palco__nota {
+  color: var(--texto-medio);
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.palco__dados {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin: 28px 0;
+}
+
+/* Quem entrou, com o atalho para encerrar a sessão (a rota /app é privada). */
+.palco__sessao {
+  margin-top: 26px;
+  color: var(--texto-fraco);
+  font-size: 0.85rem;
+}
+
+.palco__sessao button {
+  padding: 0;
+  background: none;
+  color: var(--roxo-claro);
+  font-size: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.palco__dados dt {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--texto-fraco);
+}
+
+.palco__dados dd {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.palco__nota {
+  font-size: 0.9rem;
+  border-left: 2px solid var(--roxo);
+  padding-left: 14px;
+}
+
+/*
+ * Link de volta para a landing page. Flutua sobre o palco; abaixo de 700px o
+ * aparelho ocupa a tela toda e não sobra margem para ele, então some — a seta
+ * "voltar" do navegador continua servindo, porque a rota vive no hash da URL.
+ */
+.palco__voltar {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 20;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(19, 19, 22, 0.72);
+  backdrop-filter: blur(10px);
+  color: var(--texto-medio);
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.palco__voltar:hover {
+  color: var(--texto);
+  border-color: var(--roxo);
+  transform: translateY(-1px);
+}
+
+@media (min-width: 700px) {
+  .palco__voltar {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 1080px) {
+  .palco {
+    grid-template-columns: minmax(320px, 460px) auto;
+    justify-content: center;
+    align-items: center;
+    gap: 72px;
+    padding: 40px;
+  }
+
+  .palco__contexto {
+    display: block;
+  }
+}
+
+/* ------------------------------------------------------- estrutura de tela */
+
+.tela {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  background: var(--preto);
+}
+
+.tela__rolagem {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 4px 18px 32px;
+}
+
+/*
+ * Nenhuma área rolável do aparelho mostra barra de rolagem: além de ser o
+ * comportamento do celular, isso impede que a largura do conteúdo mude ao trocar
+ * de tela (uma tela com lista ganharia a barra e a moldura pareceria mais grossa).
+ */
+.tela__rolagem,
+.lista-simples,
+.palco__contexto {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tela__rolagem::-webkit-scrollbar,
+.lista-simples::-webkit-scrollbar,
+.palco__contexto::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+.secao-titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 26px 4px 12px;
+}
+
+.secao-titulo h2 {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--texto-fraco);
+}
+
+.secao-titulo__acao {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--roxo);
+  font-weight: 600;
+}
+
+.texto-apoio {
+  color: var(--texto-fraco);
+  font-size: 0.88rem;
+  line-height: 1.55;
+  padding: 0 4px;
+}
+
+.estado-vazio {
+  color: var(--texto-fraco);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.contador-resultados {
+  color: var(--texto-fraco);
+  font-size: 0.82rem;
+  margin: 16px 4px 8px;
+}
+
+.dica-do-dia {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: var(--raio-medio);
+  background: rgba(124, 77, 255, 0.14);
+  border: 1px solid rgba(124, 77, 255, 0.3);
+  color: #d9ccff;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.rodape-app {
+  margin: 34px 0 8px;
+  text-align: center;
+  color: #5c5c62;
+  font-size: 0.75rem;
+}
