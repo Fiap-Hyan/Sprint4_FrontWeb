@@ -280,7 +280,7 @@ sempre com revisão e ajuste manual de tudo que entrou no projeto.
 
 ## Link do repositório Git e do Deploy na Vercel
 
-- **Repositório Git:** https://github.com/Fiap-Hyan/Sprint3_Frontweb
+- **Repositório Git:** https://github.com/Fiap-Hyan/Sprint4_FrontWeb
 - **Deploy na Vercel:** https://sprint4-front-web.vercel.app
 
 ---
